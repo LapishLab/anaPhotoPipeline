@@ -67,6 +67,7 @@ clearvars -except sig Fver sessSt preprocessingVars
 
 preprocessingVars.time = char(datetime('now','TimeZone','local','Format','yyyy-MM-dd''T''HH:mmXXX'));
 
-disp(['Saving: res_getPhotoData_nacKap.mat'])
-save res_getPhotoData_nacKap.mat
+saveFileName = ['res', filesep, 'getPhotoData_nacKap.mat'];
+disp(['Saving: ', saveFileName])
+save(saveFileName)
 % !ls -lh res_getPhotoData_nacKap.mat

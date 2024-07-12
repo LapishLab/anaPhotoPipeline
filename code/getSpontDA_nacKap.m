@@ -4,7 +4,7 @@ function [] = getSpontDA_nacKap(fs, lLim, uLim, minPkHeight, minPkDist, minPkPro
 [patSave, patData, vars, DirList, metaData] =  managePaths_nacKap(excludeList, main_pat);
 
 %% Load data
-sourceMat = 'res_getPhotoData_nacKap.mat';
+sourceMat = ['res', filesep, 'getPhotoData_nacKap.mat'];
 load(sourceMat)
 
 %% track preprocessing varibales for dLight
@@ -82,8 +82,9 @@ for XX = 1:size(DirList,1);
     clnSpont{XX}     = clnHld; clear clnHld
     allSpont{XX}     = allHld; clear allHld
 end
- 
-save("res_getSpontDA_nacKap.mat","clnSpont","allSpont","spontStats","nmExcl","sourceMat","preprocessingVars")
+
+saveFileName = ['res', filesep, 'getSpontDA_nacKap.mat'];
+save(saveFileName,"clnSpont","allSpont","spontStats","nmExcl","sourceMat","preprocessingVars")
 
 % % %% Diagnostics
 % % k_lk = find(histc(evt,xA)==1); % Can be used to index evt for viz.

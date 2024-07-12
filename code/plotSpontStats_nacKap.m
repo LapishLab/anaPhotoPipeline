@@ -16,7 +16,8 @@ function [] = plotSpontStats_nacKap(fs, lLim, uLim, sexSel, depVar, saveData, sa
 % savePlot = 1;
 
 %% Load Data
-load res_getSpontDA_nacKap.mat; % get results of getSpontDa*  
+saveFileName = ['res', filesep, 'getSpontDA_nacKap.mat'];
+load(saveFileName); % get results of getSpontDa*  
 
 %% Set the paths to data, code, results, data to exclude
 [patSave, patData, vars, DirList, metaData] = managePaths_nacKap(excludeList, main_pat);
