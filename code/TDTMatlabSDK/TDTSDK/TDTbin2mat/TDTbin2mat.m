@@ -461,7 +461,12 @@ if ~useOutsideHeaders
             if bNoteStart
                 % start of new note
                 noteText = '';
-                noteInd = str2double(noteLine(strfind(noteLine,'-')+1:strfind(noteLine,':')-1));
+                % noteInd = str2double(noteLine(strfind(noteLine,'-')+1:strfind(noteLine,':')-1));
+                colonIndexes = strfind(noteLine,':'); %find all colons
+                firstColon= colonIndexes(1); %just use the first colon
+                dashIndexes = strfind(noteLine,'-'); %find all dashes
+                firstDash= dashIndexes(1); %just use the first dash
+                noteInd = str2double(noteLine(firstDash+1:firstColon-1));
                 noteIdentifier = noteLine(strfind(noteLine, '[')+1:strfind(noteLine,']')-1);
                 spaces = strfind(noteLine, ' ');
                 noteTime = noteLine(spaces(1)+1:spaces(2)-1);
