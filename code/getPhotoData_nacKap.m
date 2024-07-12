@@ -21,7 +21,7 @@ for XX = 1:size(DirList,1);
     st      = photoData.start;   % Start of behavior (Eart)  
     if getFver == 1; FverTm = photoData.Fver; end; % Licks & lever press are coded as Fver    
 
-    clipStart = fs*clipTime;  % remove saturated part at the begining of the signa.
+    clipStart = round(fs*clipTime);  % remove saturated part at the begining of the signa.
 
     %% Subtracting off isosbestic signal?
     if subIso == 1;
