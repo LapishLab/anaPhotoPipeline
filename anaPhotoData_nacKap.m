@@ -11,9 +11,9 @@ close all
 %% managePaths_nacKap.m 
 % Each routine calls managePaths_nacKap. This code manages the paths to 
 % the data, code, and results. In addition, it manages the exclusion of 
-% data sets from the analysis. Be sure to update it for your data. 
+% data sets from the analysis. 
 
-%% Put the path to your parent directory here
+%% Put the path to your parent directory here. Leave as 'pwd' if you want it done automatically
 main_pat = pwd; % or the old fashioned way --> '/Users/clapish/Library/CloudStorage/OneDrive-IndianaUniversity/INIAstress_CSAC/connerWallace/NAc_SpontaneousKappaProject/curated/';
 
 %% Adding files importers and anaysis code
@@ -25,25 +25,25 @@ excludeList = {'CS009_L-NAC-240311-121730'};
 %% Import data 
 disp('************** Importing data **************')
 % Set variables for importing
-zs          = 0;    % zscore prior to detrending = 1; % <-- can interfere with detrending
-detrendData = 1;    % detrend the data? Yes=1; Always leave as yes. 
-getFver     = 1;    % Get lick or lever press data? Yes=1;
-subIso      = 0;    % Subtract off isosbestic signal? Yes=1;
-clipTime    = 10;   % Remove saturated part at the begining of the signal? 
-                    % If ~=0 remove saturated part at start (fs*10). Units
-                    % are seconds.
+zs          = 0;        % zscore prior to detrending = 1; % <-- can interfere with detrending. Leave as no. 
+detrendData = 1;        % detrend the data? Yes=1; Always leave as yes. 
+getFver     = 1;        % Get lick or lever press data? Yes=1;
+subIso      = 0;        % Subtract off isosbestic signal? Yes=1;
+clipTime    = 10;       % Remove saturated part at the begining of the signal? 
+                        % If ~=0 remove saturated part at start (fs*10). Units
+                        % are seconds.
 getPhotoData_nacKap(zs, detrendData, getFver, subIso, clipTime, excludeList, main_pat)
 
 %% Get spontaneous transients
 disp('************** Getting spontaneous transients **************') 
 %% Set varibales for dLight
-fs = 1.0173e+03;
-lLim = 1;
-uLim = 1;
-minPkHeight = 1; % in zscores
-minPkDist = round(fs/4);
-minPkProm = 2; % I found that 2 was good for this (ccl).  
-zspont = 0;
+fs = 1.0173e+03;        % sample frequency
+lLim = 1;               % Time to pull before peak of spont transient
+uLim = 1;               % Time to pull after peak of spont transient
+minPkHeight = 1;        % in zscores. Threshold for peak height. 
+minPkDist = round(fs/4);% Peaks have to be at least this separated. 
+minPkProm = 2;          % Prominence. I found that 2 was good for this (ccl).  
+zspont = 0;             % zscore the peak heights following the detection stage. 
 getSpontDA_nacKap(fs, lLim, uLim, minPkHeight, minPkDist, minPkProm, excludeList, main_pat, zspont)
 
 %% Plot spontaneous data timeseries 
@@ -55,7 +55,7 @@ plotSpontDa_nacKap(fs, lLim, uLim, sexSel, saveData, savePlot, excludeList, main
 
 %% Plot statistics of the spontaneous transients.
 disp('************** Plotting spontaneous stats **************') 
-depVar = 'Amplitude'; % 'Amplitude','Width','Prominence','Frequency (Hz)'
+depVar = 'Amplitude';   % 'Amplitude','Width','Prominence','Frequency (Hz)'
 plotSpontStats_nacKap(fs, lLim, uLim, sexSel, depVar, saveData, savePlot, excludeList, main_pat)
 
 %% ccl 
