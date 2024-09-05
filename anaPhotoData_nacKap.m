@@ -20,7 +20,7 @@ main_pat = pwd; % or the old fashioned way --> '/Users/clapish/Library/CloudStor
 addpath(genpath([main_pat '/code/']));
 
 %% List the data sets to exclude here. Are you SURE they are spelled correctly?
-excludeList = {'CS009_L-NAC-240311-121730'};
+excludeList = {'CS009_L-NAC-240311-121730'}; % To exclude nothing = {};
 
 %% Import data 
 disp('************** Importing data **************')
@@ -38,8 +38,8 @@ getPhotoData_nacKap(zs, detrendData, getFver, subIso, clipTime, excludeList, mai
 disp('************** Getting spontaneous transients **************') 
 %% Set varibales for dLight
 fs = 1.0173e+03;        % sample frequency
-lLim = 1;               % Time to pull before peak of spont transient
-uLim = 1;               % Time to pull after peak of spont transient
+lLim = 1;               % Time to pull before peak of spont transient in sec
+uLim = 1;               % Time to pull after peak of spont transient in sec
 minPkHeight = 1;        % in zscores. Threshold for peak height. 
 minPkDist = round(fs/4);% Peaks have to be at least this separated. 
 minPkProm = 2;          % Prominence. I found that 2 was good for this (ccl).  

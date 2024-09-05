@@ -1,5 +1,9 @@
 function [compiledData] = mkCompiledData
 
+%% This function creates 'compliedData', which containts the statistics and spontaneous transients for each session in your data set
+%% Columns 1:n will be defined by the dimensions of your metaData.mat file. The next columns are as follow:
+%% spontaneous traces, amplitudes, width, prominence, and frequency
+
 clear all
 close all
 

@@ -26,8 +26,6 @@ for XX = 1:size(DirList,1);
     % use find peaks to get tranisents (zscore 2.6 was threshold in Conner preprint)
     zs = zscore(s);
     [z_amp,locs,wid,prm] = findpeaks(zs, "MinPeakHeight", minPkHeight, "MinPeakDistance", minPkDist, "MinPeakProminence",minPkProm);
-    tmTrans = xA(locs);
-    frq = 1./diff(tmTrans);     % Gets the frequency of the peaks in Hz
     
     %% zscore signal for analysis?
     if zspont == 1;
@@ -50,11 +48,21 @@ for XX = 1:size(DirList,1);
         %     k_lk = find(histc(evt,xA)==1); % Can be used to index evt for viz.
 
         %% eliminate transients near lever presses
+        tmTrans = xA(locs);
         for i=1:length(tmTrans);
             kp(i) = isempty(find(evt > tmTrans(i)-lLim & evt <= tmTrans(i)+uLim));
         end;
-
-        clean_locs = locs(kp==1); clear kp
+        
+        %% Removing stats near lever presses
+        clean_amp = amp(kp==1);
+        clean_wid = wid(kp==1);
+        clean_prm = prm(kp==1);
+        clean_locs = locs(kp==1); 
+        tmTrans = xA(clean_locs);
+        clean_frq = 1./diff(tmTrans);     % Gets the frequency of the peaks in Hz
+        clear kp
+        
+        %% Get traces excluding those near lever presses
         for i = 1:length(clean_locs);
             try % using try here b/c some of the transients are within the lim of the start/stop of session
                 if zspont == 1;
@@ -74,10 +82,10 @@ for XX = 1:size(DirList,1);
         error(['No spontaneous transients found for: ' DirList{XX} '. Add this dataset to excludeList and rerun'])
     end
     
-    spontStats.a{XX} = amp;
-    spontStats.w{XX} = wid;
-    spontStats.p{XX} = prm;
-    spontStats.f{XX} = frq;
+    spontStats.a{XX} = clean_amp;
+    spontStats.w{XX} = clean_wid;
+    spontStats.p{XX} = clean_prm;
+    spontStats.f{XX} = clean_frq;
     nmExcl(XX)       = nmEx;
     clnSpont{XX}     = clnHld; clear clnHld
     allSpont{XX}     = allHld; clear allHld
